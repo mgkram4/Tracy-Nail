@@ -1,101 +1,198 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { FaCut, FaGem, FaHandSparkles, FaPaintBrush, } from 'react-icons/fa';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1
+  }
+};
+
+const services = [
+  { name: "Classic Manicure", price: "$25", icon:  FaPaintBrush, description: "Trim, shape, and polish for beautiful nails" },
+  { name: "Gel Manicure", price: "$35", icon:  FaPaintBrush, description: "Long-lasting gel polish for 2-3 weeks of shine" },
+  { name: "Acrylic Full Set", price: "$50", icon: FaGem, description: "Full acrylic nail extensions for added length" },
+  { name: "Nail Art", price: "From $10", icon: FaPaintBrush, description: "Custom designs to express your style" },
+  { name: "Pedicure Deluxe", price: "$45", icon: FaHandSparkles, description: "Luxurious foot care with massage and polish" },
+  { name: "Nail Repair", price: "$15", icon: FaCut, description: "Quick fixes for chips, cracks, or breaks" }
+];
+
+export default function LandingPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-purple-300 to-pink-200 relative overflow-hidden rounded-xl">
+      {/* Animated background shapes */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute bg-white opacity-10 rounded-full"
+            style={{
+              width: Math.random() * 300 + 50,
+              height: Math.random() * 300 + 50,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              scale: [1, 2, 2, 1, 1],
+              rotate: [0, 0, 270, 270, 0],
+              opacity: [0.1, 0.2, 0.4, 0.2, 0.1],
+              borderRadius: ["20%", "20%", "50%", "80%", "20%"],
+            }}
+            transition={{
+              duration: 20,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.5, 0.8, 1],
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          />
+        ))}
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="container mx-auto px-4 pt-24 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-6xl font-bold text-purple-800 mb-4 relative inline-block">
+            Tracy Nails Studio
+            <motion.span
+              className="absolute -top-4 -right-4 text-yellow-400"
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            >
+            </motion.span>
+          </h1>
+          <p className="text-2xl text-purple-600">Where Every Nail Tells a Story</p>
+          <motion.div
+            className="mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+            <Link href="/book" className="bg-pink-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-pink-600 transition duration-300 inline-flex items-center">
+              <FaPaintBrush className="mr-2" />
+              Book Your Glamour Session
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="mb-20"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <h2 className="text-3xl font-semibold text-purple-700 mb-8 text-center">Our Services</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg p-6 shadow-lg"
+              >
+                <service.icon className="text-4xl text-purple-600 mb-4" />
+                <h3 className="text-xl font-semibold text-purple-700 mb-2">{service.name}</h3>
+                <p className="text-purple-800 mb-4">{service.description}</p>
+                <p className="text-2xl font-bold text-purple-600">{service.price}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <div className="bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+            <h2 className="text-3xl font-semibold text-purple-700 mb-6 text-center">Why Choose Tracy Nails?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-xl font-semibold text-purple-600 mb-2">Expert Technicians</h3>
+                <p className="text-purple-800">Our skilled team brings years of experience and creativity to every service.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-purple-600 mb-2">Premium Products</h3>
+                <p className="text-purple-800">We use only the highest quality, long-lasting nail care products.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-purple-600 mb-2">Hygienic Environment</h3>
+                <p className="text-purple-800">Your safety is our priority, with strict cleanliness standards.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-purple-600 mb-2">Customized Designs</h3>
+                <p className="text-purple-800">Express yourself with unique, personalized nail art creations.</p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <h2 className="text-3xl font-semibold text-purple-700 mb-8 text-center">Special Offers</h2>
+          <div className="bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg p-8 shadow-lg text-white">
+            <h3 className="text-2xl font-bold mb-4">New Client Special</h3>
+            <p className="text-lg mb-4">Enjoy 20% off your first visit with us!</p>
+            <p className="text-sm">*Valid for new clients only. Cannot be combined with other offers.</p>
+          </div>
+        </motion.section>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-center mb-20"
+        >
+          <Link href="/book" className="bg-purple-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-purple-500 transition duration-300">
+            Book Your Appointment Now
+          </Link>
+        </motion.div>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
+        >
+          <h2 className="text-3xl font-semibold text-purple-700 mb-8 text-center">Visit Us</h2>
+          <div className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg text-center">
+            <p className="text-xl text-purple-800 mb-2">123 Nail Avenue, Beauty Town, BT 12345</p>
+            <p className="text-lg text-purple-600 mb-4">Open Monday-Saturday: 9AM - 7PM | Sunday: 10AM - 5PM</p>
+            <p className="text-purple-800">Contact us: (555) 123-4567 | info@tracynails.com</p>
+          </div>
+        </motion.section>
+      </div>
     </div>
   );
 }
