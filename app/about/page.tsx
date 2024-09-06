@@ -48,7 +48,7 @@ export default function AboutPage() {
                   Tracy Nails Studio was born from a passion for beauty and a desire to create a sanctuary where clients could indulge in luxurious nail care. Founded in 2010 by Tracy Nguyen, our studio has grown from a small local secret to a beloved beauty destination.
                 </p>
                 <p className="text-purple-800">
-                  With over a decade of experience, we've perfected the art of nail care, combining traditional techniques with innovative trends to deliver stunning results that boost confidence and brighten days.
+                  With over a decade of experience, we have perfected the art of nail care, combining traditional techniques with innovative trends to deliver stunning results that boost confidence and brighten days.
                 </p>
               </div>
             </div>

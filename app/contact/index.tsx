@@ -45,7 +45,7 @@ export default function ContactPage() {
           <motion.div variants={itemVariants}>
             <h2 className="text-3xl font-semibold mb-6 text-purple-700">Book Your Glamour Session</h2>
             <p className="text-purple-800 mb-6">
-              Were excited to pamper you at Tracy Nails Studio! Fill out the form, and we'll get back to you as soon as possible to confirm your appointment.
+              Were excited to pamper you at Tracy Nails Studio! Fill out the form, and we will get back to you as soon as possible to confirm your appointment.
             </p>
             <ContactForm />
           </motion.div>
