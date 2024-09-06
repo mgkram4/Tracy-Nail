@@ -60,7 +60,7 @@ export default function Services() {
               className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 relative overflow-hidden"
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
-              onHoverStart={() => setHoveredService(index)}
+              onHoverStart={() => setHoveredService(index )}
               onHoverEnd={() => setHoveredService(null)}
             >
               <service.icon className="text-4xl text-purple-600 mb-4" />
@@ -118,7 +118,7 @@ export default function Services() {
             <FaStar className="text-yellow-400 text-4xl" />
             <FaStar className="text-yellow-400 text-4xl" />
           </div>
-          <p className="text-purple-800 text-xl mt-4">"Tracy Nails Studio transformed my nails into works of art. I've never felt more glamorous!" - Sarah T.</p>
+          <p className="text-purple-800 text-xl mt-4">Tracy Nails Studio transformed my nails into works of art. I havve never felt more glamorous! - Sarah T.</p>
         </motion.div>
 
         {/* Call to Action */}
