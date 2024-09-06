@@ -1,11 +1,20 @@
 "use client"
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { IconType } from 'react-icons';
 import { FaGem, FaHandSparkles, FaHeart, FaMagic, FaPaintBrush, FaRegSmile, FaStar } from 'react-icons/fa';
 
-const services = [
+interface Service {
+  name: string;
+  icon: IconType;
+  description: string;
+  link: string;
+}
+
+const services: Service[] = [
   { name: 'Luxe Manicures', icon: FaMagic, description: 'Indulge in our premium manicure treatments for perfectly polished nails.', link: '/services/manicures' },
   { name: 'Artistic Nail Design', icon: FaPaintBrush, description: 'Express yourself with our creative and trendy nail art designs.', link: '/services/nail-art' },
   { name: 'Gel & Acrylic Extensions', icon: FaGem, description: 'Enhance your nails with durable and stunning extensions.', link: '/services/extensions' },
@@ -34,7 +43,7 @@ const itemVariants = {
 };
 
 export default function Services() {
-  const [hoveredService, setHoveredService] = useState(null);
+  const [hoveredServiceIndex, setHoveredServiceIndex] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-300 to-pink-200 py-20 relative overflow-hidden">
@@ -54,34 +63,37 @@ export default function Services() {
           initial="hidden"
           animate="visible"
         >
-          {services.map((service, index) => (
-            <motion.div 
-              key={index} 
-              className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 relative overflow-hidden"
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              onHoverStart={() => setHoveredService(index )}
-              onHoverEnd={() => setHoveredService(null)}
-            >
-              <service.icon className="text-4xl text-purple-600 mb-4" />
-              <h3 className="text-xl font-semibold text-purple-700 mb-2">{service.name}</h3>
-              <p className="text-purple-800 mb-4">{service.description}</p>
-              <Link href={service.link} className="inline-block bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600 transition duration-300">
-                Explore &rarr;
-              </Link>
-              {hoveredService === index && (
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-20"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.2 }}
-                  exit={{ opacity: 0 }}
-                />
-              )}
-            </motion.div>
-          ))}
+          {services.map((service, index) => {
+            const ServiceIcon = service.icon;
+            return (
+              <motion.div 
+                key={service.name}
+                className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 relative overflow-hidden"
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                onHoverStart={() => setHoveredServiceIndex(index)}
+                onHoverEnd={() => setHoveredServiceIndex(null)}
+              >
+                <ServiceIcon className="text-4xl text-purple-600 mb-4" />
+                <h3 className="text-xl font-semibold text-purple-700 mb-2">{service.name}</h3>
+                <p className="text-purple-800 mb-4">{service.description}</p>
+                <Link href={service.link} className="inline-block bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600 transition duration-300">
+                  Explore &rarr;
+                </Link>
+                {hoveredServiceIndex === index && (
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-20"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.2 }}
+                    exit={{ opacity: 0 }}
+                  />
+                )}
+              </motion.div>
+            );
+          })}
         </motion.div>
 
-        {/* New section: Featured Treatment */}
+        {/* Featured Treatment */}
         <motion.div 
           className="bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mb-16"
           initial={{ opacity: 0, y: 50 }}
@@ -91,7 +103,13 @@ export default function Services() {
           <h2 className="text-3xl font-bold text-purple-800 mb-4">Featured Treatment</h2>
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-4 md:mb-0 md:mr-8">
-              <img src="/featured-treatment.jpg" alt="Featured Nail Art" className="rounded-lg shadow-md" />
+              <Image
+                src="/featured-treatment.jpg"
+                alt="Featured Nail Art"
+                width={500}
+                height={300}
+                className="rounded-lg shadow-md"
+              />
             </div>
             <div className="md:w-1/2">
               <h3 className="text-2xl font-semibold text-purple-700 mb-2">Holographic Galaxy Nails</h3>
@@ -103,7 +121,7 @@ export default function Services() {
           </div>
         </motion.div>
 
-        {/* New section: Client Love */}
+        {/* Client Love */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0 }}
@@ -112,13 +130,11 @@ export default function Services() {
         >
           <h2 className="text-3xl font-bold text-purple-800 mb-8">Client Love</h2>
           <div className="flex justify-center items-center space-x-4">
-            <FaStar className="text-yellow-400 text-4xl" />
-            <FaStar className="text-yellow-400 text-4xl" />
-            <FaStar className="text-yellow-400 text-4xl" />
-            <FaStar className="text-yellow-400 text-4xl" />
-            <FaStar className="text-yellow-400 text-4xl" />
+            {[...Array(5)].map((_, index) => (
+              <FaStar key={index} className="text-yellow-400 text-4xl" />
+            ))}
           </div>
-          <p className="text-purple-800 text-xl mt-4">Tracy Nails Studio transformed my nails into works of art. I havve never felt more glamorous! - Sarah T.</p>
+          <p className="text-purple-800 text-xl mt-4">Tracy Nails Studio transformed my nails into works of art. I have never felt more glamorous! - Sarah T.</p>
         </motion.div>
 
         {/* Call to Action */}
@@ -137,9 +153,9 @@ export default function Services() {
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute top-10 left-10 w-20 h-20 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-      <div className="absolute top-0 right-20 w-32 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-20 left-40 w-24 h-24 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+      <div className="absolute top-10 left-10 w-20 h-20 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
+      <div className="absolute top-0 right-20 w-32 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
+      <div className="absolute bottom-20 left-40 w-24 h-24 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
     </div>
   );
 }
